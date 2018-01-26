@@ -561,11 +561,11 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "mini_tokens.l"
-#line 2 "mini_tokens.l"
+#line 1 "minic.l"
+#line 2 "minic.l"
 #include <stdio.h>
 #include <stdlib.h>
-#include "tokens.h"
+int g_tokens;
 #line 570 "lex.yy.c"
 
 #define INITIAL 0
@@ -784,7 +784,7 @@ YY_DECL
 		}
 
 	{
-#line 14 "mini_tokens.l"
+#line 14 "minic.l"
 
 #line 790 "lex.yy.c"
 
@@ -856,177 +856,177 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 15 "mini_tokens.l"
+#line 15 "minic.l"
 
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 16 "mini_tokens.l"
-printf("tVAR\n");
+#line 16 "minic.l"
+if (g_tokens) { printf("tVAR\n"); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 17 "mini_tokens.l"
-printf("tBOOLEAN\n");
+#line 17 "minic.l"
+if (g_tokens) { printf("tBOOLEAN\n"); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 18 "mini_tokens.l"
-printf("tFLOAT\n");
+#line 18 "minic.l"
+if (g_tokens) { printf("tFLOAT\n"); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 19 "mini_tokens.l"
-printf("tINT\n");
+#line 19 "minic.l"
+if (g_tokens) { printf("tINT\n"); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 20 "mini_tokens.l"
-printf("tSTRING\n");
+#line 20 "minic.l"
+if (g_tokens) { printf("tSTRING\n"); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 21 "mini_tokens.l"
-printf("tWHILE\n");
+#line 21 "minic.l"
+if (g_tokens) { printf("tWHILE\n"); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 22 "mini_tokens.l"
-printf("tIF\n");
+#line 22 "minic.l"
+if (g_tokens) { printf("tIF\n"); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 23 "mini_tokens.l"
-printf("tELSE\n");
+#line 23 "minic.l"
+if (g_tokens) { printf("tELSE\n"); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 24 "mini_tokens.l"
-printf("tPRINT\n");
+#line 24 "minic.l"
+if (g_tokens) { printf("tPRINT\n"); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 25 "mini_tokens.l"
-printf("tREAD\n");
+#line 25 "minic.l"
+if (g_tokens) { printf("tREAD\n"); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 26 "mini_tokens.l"
-printf("tSEMICOLON\n");
+#line 26 "minic.l"
+if (g_tokens) { printf("tSEMICOLON\n"); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 27 "mini_tokens.l"
-printf("tCOLON\n");
+#line 27 "minic.l"
+if (g_tokens) { printf("tCOLON\n"); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 28 "mini_tokens.l"
-printf("tASSIGN\n");
+#line 28 "minic.l"
+if (g_tokens) { printf("tASSIGN\n"); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 29 "mini_tokens.l"
-printf("tADD\n");
+#line 29 "minic.l"
+if (g_tokens) { printf("tADD\n"); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 30 "mini_tokens.l"
-printf("tSUB\n");
+#line 30 "minic.l"
+if (g_tokens) { printf("tSUB\n"); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 31 "mini_tokens.l"
-printf("tMUL\n");
+#line 31 "minic.l"
+if (g_tokens) { printf("tMUL\n"); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 32 "mini_tokens.l"
-printf("tDIV\n");
+#line 32 "minic.l"
+if (g_tokens) { printf("tDIV\n"); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 33 "mini_tokens.l"
-printf("tEQL\n");
+#line 33 "minic.l"
+if (g_tokens) { printf("tEQL\n"); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 34 "mini_tokens.l"
-printf("tNEQ\n");
+#line 34 "minic.l"
+if (g_tokens) { printf("tNEQ\n"); }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 35 "mini_tokens.l"
-printf("tAND\n");
+#line 35 "minic.l"
+if (g_tokens) { printf("tAND\n"); }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 36 "mini_tokens.l"
-printf("tOR\n");
+#line 36 "minic.l"
+if (g_tokens) { printf("tOR\n"); }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 37 "mini_tokens.l"
-printf("tNOT\n");
+#line 37 "minic.l"
+if (g_tokens) { printf("tNOT\n"); }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 38 "mini_tokens.l"
-printf("tLPAREN\n");
+#line 38 "minic.l"
+if (g_tokens) { printf("tLPAREN\n"); }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 39 "mini_tokens.l"
-printf("tRPAREN\n");
+#line 39 "minic.l"
+if (g_tokens) { printf("tRPAREN\n"); }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 40 "mini_tokens.l"
-printf("tLBRACE\n");
+#line 40 "minic.l"
+if (g_tokens) { printf("tLBRACE\n"); }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 41 "mini_tokens.l"
-printf("tRBRACE\n");
+#line 41 "minic.l"
+if (g_tokens) { printf("tRBRACE\n"); }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 42 "mini_tokens.l"
-printf("tBOOLVAL(%s)\n", yytext);
+#line 42 "minic.l"
+if (g_tokens) { printf("tBOOLVAL(%s)\n", yytext); }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 43 "mini_tokens.l"
-printf("tINTVAL(%s)\n", yytext);
+#line 43 "minic.l"
+if (g_tokens) { printf("tINTVAL(%s)\n", yytext); }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 44 "mini_tokens.l"
-printf("tFLOATVAL(%s)\n", yytext);
+#line 44 "minic.l"
+if (g_tokens) { printf("tFLOATVAL(%s)\n", yytext); }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 45 "mini_tokens.l"
-printf("tSTRINGVAL(%s)\n", yytext);
+#line 45 "minic.l"
+if (g_tokens) { printf("tSTRINGVAL(%s)\n", yytext); }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 46 "mini_tokens.l"
-printf("tIDENT(%s)\n", yytext);
+#line 46 "minic.l"
+if (g_tokens) { printf("tIDENT(%s)\n", yytext); }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 47 "mini_tokens.l"
-printf("tCOMMENTVAL(%s)\n", yytext);
+#line 47 "minic.l"
+if (g_tokens) { printf("tCOMMENTVAL(%s)\n", yytext); }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 48 "mini_tokens.l"
+#line 48 "minic.l"
 printf("Error: token(%s) unrecognized on line %d\n", yytext, yylineno); exit(1);
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 49 "mini_tokens.l"
+#line 49 "minic.l"
 ECHO;
 	YY_BREAK
 #line 1033 "lex.yy.c"
@@ -2042,7 +2042,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 49 "mini_tokens.l"
+#line 49 "minic.l"
 
 
 int yywrap()
@@ -2050,10 +2050,29 @@ int yywrap()
     return 1;
 }
 
-int main()
+int main(int argc, char **argv)
 {
-    yylex();
-    printf("\n");
+    if (argc == 2)
+    {
+        if (strcmp(argv[1], "scan"))
+        {
+            g_tokens = 1;
+        }
+        else if (strcmp(argv[1], "tokens"))
+        {
+            g_tokens = 0;
+        }
+    }
+    else
+    {
+        printf("Incorrent argument\n");
+        return -1;
+    }
+    while (yylex()) {}
+    if (!g_tokens)
+    {
+        printf("OK\n");
+    }
     return 0;
 }
 

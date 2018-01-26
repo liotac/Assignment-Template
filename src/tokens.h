@@ -18,7 +18,7 @@ enum tokens
     NOT,
     SEMICOLON,
     COLON,
-    EQUAL,
+    ASSIGN,
     LPAREN,
     RPAREN,
     LBRACE,
