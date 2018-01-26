@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall
-minic: lex.yy.o
+main: lex.yy.o parser.tab.o
 	$(CC) lex.yy.o -o minic
 lex.yy.c: minic.l
 	flex minic.l
