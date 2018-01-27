@@ -1,4 +1,7 @@
-# Assignment Template
+# GoLite Compiler
+
+A fully functional compiler for GoLite, a subset of Go, in C as the project for McGill's COMP 520 - Compiler Design.
+## Assignment Template
 
 To organize your assignments and project for class, please follow the skeleton provided in this repository
 
