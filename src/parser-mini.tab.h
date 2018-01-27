@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "parser.y" /* yacc.c:339  */
+#line 1 "parser-mini.y" /* yacc.c:339  */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -72,7 +72,7 @@ int yylex();
 int g_tokens;
 void yyerror(const char *s) { fprintf(stderr, "Error: (line %d) %s\n", yylineno, s); exit(1); }
 
-#line 76 "parser.tab.h" /* yacc.c:339  */
+#line 76 "parser-mini.tab.h" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -91,9 +91,9 @@ void yyerror(const char *s) { fprintf(stderr, "Error: (line %d) %s\n", yylineno,
 #endif
 
 /* In a future release of Bison, this section will be replaced
-   by #include "parser.tab.c".  */
-#ifndef YY_YY_PARSER_TAB_C_INCLUDED
-# define YY_YY_PARSER_TAB_C_INCLUDED
+   by #include "parser-mini.tab.c".  */
+#ifndef YY_YY_PARSER_MINI_TAB_C_INCLUDED
+# define YY_YY_PARSER_MINI_TAB_C_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -180,14 +180,14 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 13 "parser.y" /* yacc.c:355  */
+#line 13 "parser-mini.y" /* yacc.c:355  */
 
     int intval;
     char *strval;
     double fltval;
     int booval;
 
-#line 191 "parser.tab.h" /* yacc.c:355  */
+#line 191 "parser-mini.tab.h" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -214,11 +214,11 @@ extern YYSTYPE yylval;
 extern YYLTYPE yylloc;
 int yyparse (void);
 
-#endif /* !YY_YY_PARSER_TAB_C_INCLUDED  */
+#endif /* !YY_YY_PARSER_MINI_TAB_C_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
-#line 222 "parser.tab.h" /* yacc.c:358  */
+#line 222 "parser-mini.tab.h" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -1445,7 +1445,7 @@ yyreduce:
   switch (yyn)
     {
       
-#line 1449 "parser.tab.h" /* yacc.c:1646  */
+#line 1449 "parser-mini.tab.h" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1680,5 +1680,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 73 "parser.y" /* yacc.c:1906  */
+#line 73 "parser-mini.y" /* yacc.c:1906  */
 

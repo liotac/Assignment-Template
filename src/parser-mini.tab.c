@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_PARSER_TAB_C_INCLUDED
-# define YY_YY_PARSER_TAB_C_INCLUDED
+#ifndef YY_YY_PARSER_MINI_TAB_C_INCLUDED
+# define YY_YY_PARSER_MINI_TAB_C_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -118,14 +118,14 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 13 "parser.y" /* yacc.c:1909  */
+#line 13 "parser-mini.y" /* yacc.c:1909  */
 
     int intval;
     char *strval;
     double fltval;
     int booval;
 
-#line 129 "parser.tab.c" /* yacc.c:1909  */
+#line 129 "parser-mini.tab.c" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -152,4 +152,4 @@ extern YYSTYPE yylval;
 extern YYLTYPE yylloc;
 int yyparse (void);
 
-#endif /* !YY_YY_PARSER_TAB_C_INCLUDED  */
+#endif /* !YY_YY_PARSER_MINI_TAB_C_INCLUDED  */

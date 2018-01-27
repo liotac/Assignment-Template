@@ -1,5 +1,6 @@
+#line 2 "lex-mini.yy.c"
 
-#line 3 "lex.yy.c"
+#line 4 "lex-mini.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -556,17 +557,17 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "scanner.l"
-#line 2 "scanner.l"
+#line 1 "scanner-mini.l"
+#line 2 "scanner-mini.l"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "parser.tab.h"
+#include "parser-mini.tab.h"
 #define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno;
 int g_tokens;
 int yylex();
 #define YY_NO_INPUT 1
-#line 570 "lex.yy.c"
+#line 571 "lex-mini.yy.c"
 
 #define INITIAL 0
 
@@ -782,9 +783,9 @@ YY_DECL
 		}
 
 	{
-#line 16 "scanner.l"
+#line 16 "scanner-mini.l"
 
-#line 788 "lex.yy.c"
+#line 789 "lex-mini.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -854,142 +855,142 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 17 "scanner.l"
+#line 17 "scanner-mini.l"
 
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 18 "scanner.l"
+#line 18 "scanner-mini.l"
 if (g_tokens){printf("VAR\n"); } return VAR;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 19 "scanner.l"
+#line 19 "scanner-mini.l"
 if (g_tokens){printf("BOOLEAN\n"); } return BOOLEAN;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 20 "scanner.l"
+#line 20 "scanner-mini.l"
 if (g_tokens){printf("FLOAT\n"); } return FLOAT;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 21 "scanner.l"
+#line 21 "scanner-mini.l"
 if (g_tokens){printf("INT\n"); } return INT;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 22 "scanner.l"
+#line 22 "scanner-mini.l"
 if (g_tokens){printf("STRING\n"); } return STRING;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 23 "scanner.l"
+#line 23 "scanner-mini.l"
 if (g_tokens){printf("WHILE\n"); } return WHILE;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 24 "scanner.l"
+#line 24 "scanner-mini.l"
 if (g_tokens){printf("IF\n"); } return IF;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 25 "scanner.l"
+#line 25 "scanner-mini.l"
 if (g_tokens){printf("ELSE\n"); } return ELSE;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 26 "scanner.l"
+#line 26 "scanner-mini.l"
 if (g_tokens){printf("PRINT\n"); } return PRINT;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 27 "scanner.l"
+#line 27 "scanner-mini.l"
 if (g_tokens){printf("READ\n"); } return READ;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 28 "scanner.l"
+#line 28 "scanner-mini.l"
 if (g_tokens){printf("SEMICOLON\n"); } return SEMICOLON;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 29 "scanner.l"
+#line 29 "scanner-mini.l"
 if (g_tokens){printf("COLON\n"); } return COLON;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 30 "scanner.l"
+#line 30 "scanner-mini.l"
 if (g_tokens){printf("ASSIGN\n"); } return ASSIGN;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 31 "scanner.l"
+#line 31 "scanner-mini.l"
 if (g_tokens){printf("ADD\n"); } return ADD;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 32 "scanner.l"
+#line 32 "scanner-mini.l"
 if (g_tokens){printf("SUB\n"); } return SUB;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 33 "scanner.l"
+#line 33 "scanner-mini.l"
 if (g_tokens){printf("MUL\n"); } return MUL;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 34 "scanner.l"
+#line 34 "scanner-mini.l"
 if (g_tokens){printf("DIV\n"); } return DIV;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 35 "scanner.l"
+#line 35 "scanner-mini.l"
 if (g_tokens){printf("EQL\n"); } return EQL;
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 36 "scanner.l"
+#line 36 "scanner-mini.l"
 if (g_tokens){printf("NEQ\n"); } return NEQ;
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 37 "scanner.l"
+#line 37 "scanner-mini.l"
 if (g_tokens){printf("AND\n"); } return AND;
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 38 "scanner.l"
+#line 38 "scanner-mini.l"
 if (g_tokens){printf("OR\n"); } return OR;
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 39 "scanner.l"
+#line 39 "scanner-mini.l"
 if (g_tokens){printf("NOT\n"); } return NOT;
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 40 "scanner.l"
+#line 40 "scanner-mini.l"
 if (g_tokens){printf("LPAREN\n"); } return LPAREN;
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 41 "scanner.l"
+#line 41 "scanner-mini.l"
 if (g_tokens){printf("RPAREN\n"); } return RPAREN;
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 42 "scanner.l"
+#line 42 "scanner-mini.l"
 if (g_tokens){printf("LBRACE\n"); } return LBRACE;
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 43 "scanner.l"
+#line 43 "scanner-mini.l"
 if (g_tokens){printf("RBRACE\n"); } return RBRACE;
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 45 "scanner.l"
+#line 45 "scanner-mini.l"
 {
     if (g_tokens){printf("tBOOLEAN(%s)\n", yytext); }
     if (strcmp(yytext, "TRUE") == 0){ yylval.booval = 1; }
@@ -999,7 +1000,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 51 "scanner.l"
+#line 51 "scanner-mini.l"
 {
     if (g_tokens){printf("tFLOAT(%s)\n", yytext); }
     yylval.fltval = atof(yytext);
@@ -1008,7 +1009,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 56 "scanner.l"
+#line 56 "scanner-mini.l"
 {
     if (g_tokens){printf("tINT(%s)\n", yytext); }
     yylval.intval = atoi(yytext);
@@ -1017,7 +1018,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 61 "scanner.l"
+#line 61 "scanner-mini.l"
 {
     if (g_tokens){printf("tSTRING(%s)\n", yytext); }
     yylval.strval = strdup(yytext);
@@ -1026,7 +1027,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 66 "scanner.l"
+#line 66 "scanner-mini.l"
 {
     if (g_tokens){printf("tIDENTIFIER(%s)\n", yytext); }
     yylval.strval = strdup(yytext);
@@ -1035,20 +1036,20 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 72 "scanner.l"
+#line 72 "scanner-mini.l"
 if (g_tokens){printf("tCOMMENTVAL(%s)\n", yytext); }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 73 "scanner.l"
+#line 73 "scanner-mini.l"
 fprintf(stderr, "Error: (line %d) %s\n", yylineno, yytext); exit(1);
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 74 "scanner.l"
+#line 74 "scanner-mini.l"
 ECHO;
 	YY_BREAK
-#line 1052 "lex.yy.c"
+#line 1053 "lex-mini.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2020,7 +2021,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 74 "scanner.l"
+#line 74 "scanner-mini.l"
 
 
 

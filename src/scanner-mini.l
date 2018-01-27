@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "parser.tab.h"
+#include "parser-mini.tab.h"
 #define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno;
 int g_tokens;
 int yylex();
