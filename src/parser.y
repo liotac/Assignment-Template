@@ -4,8 +4,7 @@
 
 extern int yylineno;
 int yylex();
-void yyerror(const char *s){ fprintf(stderr, "Error: (line %d) %s\n", yylineno, s); exit(1;) }
-typedef enum { false, true } bool;
+void yyerror(const char *s) { fprintf(stderr, "Error: (line %d) %s\n", yylineno, s); exit(1); }
 %}
 
 %locations
@@ -14,7 +13,7 @@ typedef enum { false, true } bool;
     int intval;
     char *strval;
     double fltval;
-    bool booval;
+    int booval;
 }
 %token <intval> tINT
 %token <fltval> tFLOAT
@@ -22,11 +21,14 @@ typedef enum { false, true } bool;
 %token <booval> tBOOLEAN
 %token <strval> tIDENTIFIER
 %token ADD SUB MUL DIV VAR INT FLOAT BOOLEAN STRING LPAREN RPAREN IF ELSE WHILE
-%token LBRACE RBRACE NOT NEQ EQL AND OR
+%token LBRACE RBRACE NOT NEQ EQL AND OR ASSIGN COLON SEMICOLON PRINT READ
 
+%left OR
+%left AND
+%left EQL NEQ
 %left ADD SUB
 %left MUL DIV
-%left UMINUS
+%left UMINUS NOT
 
 %start program
 %%
@@ -43,19 +45,24 @@ declaration : VAR tIDENTIFIER COLON INT ASSIGN tINT SEMICOLON
 statements : %empty
            | statement statements
            ;
-statement : READ tIDENTIFIER
-          | PRINT expression
-          | tIDENTIFIER ASSIGN expression
+statement : READ tIDENTIFIER SEMICOLON
+          | PRINT expression SEMICOLON
+          | tIDENTIFIER ASSIGN expression SEMICOLON
           | IF expression LBRACE statements RBRACE optionalelse
           | WHILE expression LBRACE statements RBRACE
           ;
 expression : tIDENTIFIER
            | literal
+           | expression OR expression
+           | expression AND expression
+           | expression EQL expression
+           | expression NEQ expression
            | expression ADD expression
            | expression SUB expression
            | expression MUL expression
            | expression DIV expression
            | LPAREN expression RPAREN
+           | NOT expression
            | SUB expression %prec UMINUS
            ;
 literal : tINT | tFLOAT | tSTRING | tBOOLEAN
@@ -63,3 +70,4 @@ literal : tINT | tFLOAT | tSTRING | tBOOLEAN
 optionalelse : %empty
              | ELSE LBRACE statements RBRACE
              ;
+%%

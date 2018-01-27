@@ -3,12 +3,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include "parser.tab.h"
-typedef enum { false, true } bool;
+#define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno;
 int g_tokens;
 %}
 CHAR [ a-zA-Z0-9$-/:-?{-~!^_`\[\]]
 ESCAPE \\[abfnrtv"\\]
 %option yylineno
+%option noinput
+%option nounput
 %%
 [ \t\r\n]+
 "var"                       if (g_tokens){printf("VAR\n"); } return VAR;
@@ -40,61 +42,31 @@ ESCAPE \\[abfnrtv"\\]
 
 TRUE|FALSE {
     if (g_tokens){printf("tBOOLEAN(%s)\n", yytext); }
-    if (strcmp(yytext, "TRUE") == 0){ yyval.boolval = true; }
-    else { yyval.boolval = false; }
+    if (strcmp(yytext, "TRUE") == 0){ yylval.booval = 1; }
+    else { yylval.booval = 0; }
     return tBOOLEAN;
+}
+(0|([1-9][0-9]*))(\.[0-9]+) {
+    if (g_tokens){printf("tFLOAT(%s)\n", yytext); }
+    yylval.fltval = atof(yytext);
+    return tFLOAT;
 }
 0|([1-9][0-9]*) {
     if (g_tokens){printf("tINT(%s)\n", yytext); }
-    yyval.intval = atoi(yytext);
+    yylval.intval = atoi(yytext);
     return tINT;
-}
-(0|[1-9][0-9])*\.[0-9]+ {
-    if (g_tokens){printf("tFLOAT(%s)\n", yytext); }
-    yyval.fltval = atofy(yytext);
-    return tFLOAT;
 }
 \"({CHAR}|{ESCAPE})*\" {
     if (g_tokens){printf("tSTRING(%s)\n", yytext); }
-    yyval.strval = strdup(yytext);
+    yylval.strval = strdup(yytext);
     return tSTRING;
 }
 [a-zA-Z_][a-zA-Z0-9_]* {
     if (g_tokens){printf("tIDENTIFIER(%s)\n", yytext); }
-    yyval.strval = strdup(yytext);
+    yylval.strval = strdup(yytext);
     return tIDENTIFIER;
 }
 
 "//".*      if (g_tokens){printf("tCOMMENTVAL(%s)\n", yytext); }
 .           fprintf(stderr, "Error: (line %d) %s\n", yylineno, yytext); exit(1);
 %%
-int yywrap()
-{
-    return 1;
-}
-
-int main(int argc, char **argv)
-{
-    if (argc == 2)
-    {
-        if (strcmp(argv[1], "scan") == 0)
-        {
-            g_tokens = 0;
-        }
-        else if (strcmp(argv[1], "tokens") == 0)
-        {
-            g_tokens = 1;
-        }
-    }
-    else
-    {
-        printf("Incorrent argument\n");
-        return -1;
-    }
-    while (yylex()) {}
-    if (!g_tokens)
-    {
-        printf("OK\n");
-    }
-    return 0;
-}
