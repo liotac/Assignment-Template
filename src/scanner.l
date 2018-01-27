@@ -5,6 +5,7 @@
 #include "parser.tab.h"
 #define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno;
 int g_tokens;
+int yylex();
 %}
 CHAR [ a-zA-Z0-9$-/:-?{-~!^_`\[\]]
 ESCAPE \\[abfnrtv"\\]

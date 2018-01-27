@@ -4,6 +4,7 @@
 
 extern int yylineno;
 int yylex();
+int g_tokens;
 void yyerror(const char *s) { fprintf(stderr, "Error: (line %d) %s\n", yylineno, s); exit(1); }
 %}
 
