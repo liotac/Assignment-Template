@@ -7,7 +7,8 @@
 int g_tokens;
 int yylex();
 %}
-CHAR [ a-zA-Z0-9$-/:-?{-~!^_`\[\]]
+SYMBOL [-~@#$%^&*+/`<>=_|'.,;:!?{}\[\]() ]
+CHAR [a-zA-Z0-9]
 ESCAPE \\[abfnrtv"\\]
 %option yylineno
 %option noinput
@@ -57,7 +58,7 @@ TRUE|FALSE {
     yylval.intval = atoi(yytext);
     return tINT;
 }
-\"({CHAR}|{ESCAPE})*\" {
+\"({CHAR}|{SYMBOL}|{ESCAPE})*\" {
     if (g_tokens){printf("tSTRING(%s)\n", yytext); }
     yylval.strval = strdup(yytext);
     return tSTRING;

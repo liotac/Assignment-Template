@@ -38,10 +38,7 @@ program : declarations statements
 declarations : %empty
              | declaration declarations
              ;
-declaration : VAR tIDENTIFIER COLON INT ASSIGN tINT SEMICOLON
-            | VAR tIDENTIFIER COLON FLOAT ASSIGN tFLOAT SEMICOLON
-            | VAR tIDENTIFIER COLON BOOLEAN ASSIGN tBOOLEAN SEMICOLON
-            | VAR tIDENTIFIER COLON STRING ASSIGN tSTRING SEMICOLON
+declaration : VAR tIDENTIFIER COLON type ASSIGN expression SEMICOLON
             ;
 statements : %empty
            | statement statements
@@ -68,6 +65,8 @@ expression : tIDENTIFIER
            ;
 literal : tINT | tFLOAT | tSTRING | tBOOLEAN
         ;
+type : INT | FLOAT | STRING | BOOLEAN
+     ;
 optionalelse : %empty
              | ELSE LBRACE statements RBRACE
              ;
