@@ -1,0 +1,2 @@
+// int is a reserved word
+var number : int = int;

@@ -1,2 +1,0 @@
-var str : string = "~#$%^&*-+/`<>_|'.,;:!?{}[]()";
-var _friend : string = "\a\b\f\n\r\t\v\"\\";

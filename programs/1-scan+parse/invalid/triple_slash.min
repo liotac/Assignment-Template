@@ -1,0 +1,2 @@
+// single backslash not part of accepted strings
+var slashes : string = "\\\";
