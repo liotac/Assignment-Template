@@ -1,14 +1,20 @@
-C = gcc
-
+CC = gcc
 CFLAGS = -Wall
 
-main: parser-mini.tab.o lex-mini.yy.o main-mini.o
-	$(CC) lex-mini.yy.o parser-mini.tab.o main-mini.o -o compiler-mini -lfl
+main: bin/parser.tab.o bin/lex.yy.o bin/main.o
+	$(CC) bin/lex.yy.o bin/parser.tab.o bin/main.o -o bin/compiler -lfl
 
-parser-mini.tab.c parser-mini.tab.h: parser-mini.y
-	bison --yacc --defines=parser-mini.tab.c --output=parser-mini.tab.h parser-mini.y
+bin/main.o: main.c
+	$(CC) -c main.c -o bin/main.o
 
-lex-mini.yy.c: scanner-mini.l parser-mini.tab.h
-	flex -o lex-mini.yy.c scanner-mini.l
+# Parser (bison)
+bin/parser.tab.c bin/parser.tab.h: parser.y
+	bison --yacc --defines=bin/parser.tab.c --output=bin/parser.tab.h parser.y
+
+# Scanner (flex)
+bin/lex.yy.c: scanner.l bin/parser.tab.h
+	flex -o bin/lex.yy.c scanner.l
+
+# Cleanup
 clean:
-	rm parser-mini.tab.* lex-mini.yy.*; rm *.o; rm compiler-mini
+	rm -f bin/*
