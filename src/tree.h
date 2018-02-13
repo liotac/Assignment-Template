@@ -23,21 +23,21 @@ typedef enum {
 
 typedef struct EXPR {
     int lineno;
-    Tyoe type ;
+    Type type ;
     union { char *identifier;
             char *sval;
             int ival;
             float fval;
             bool bval;
             struct EXPR *unary;
-            struct {EXPR *left; EXPR *right;} binary;
+            struct {struct EXPR *left; struct EXPR *right;} binary;
     } val;
 } EXPR;
 
 typedef struct DECL {
     int lineno;
     Type type;
-    union { struct { char *identifier; EXPR *expression; Type type } declaration;
+    union { struct { char *identifier; EXPR *expression; Type type; } declaration;
             struct { struct DECL *element; struct DECL *list; } seq;
     } val;
 } DECL;
@@ -48,7 +48,7 @@ typedef struct STMT {
     union { struct { char *identifier; EXPR *expression; } assignment;
             struct { struct STMT *element; struct STMT *list; } seq;
             struct { EXPR *condition; struct STMT *body; } cond; //if/while
-            struct { EXPR *condition; struct STMT *ifpart; STMT *elsepart; } ifel;
+            struct { EXPR *condition; struct STMT *ifpart; struct STMT *elsepart; } ifel;
             EXPR *printexpr;
             char *identifier;
     } val;
@@ -78,9 +78,9 @@ STMT *newSTMTprint(int lineno, EXPR *printexpr);
 
 EXPR *newEXPRidentifier(int lineno, char *identifier);
 EXPR *newEXPRstring(int lineno, char *stringLiteral);
-EXPR *newEXPRint(int lineno, int *intLiteral);
-EXPR *newEXPRfloat(int lineno, float *floatLiteral);
-EXPR *newEXPRbool(int lineno, bool *boolLiteral);
+EXPR *newEXPRint(int lineno, int intLiteral);
+EXPR *newEXPRfloat(int lineno, float floatLiteral);
+EXPR *newEXPRbool(int lineno, bool boolLiteral);
 EXPR *newEXPRunary(int lineno, Type type, EXPR *unaryExpression);
 EXPR *newEXPRbinary(int lineno, Type type, EXPR *leftExpression, EXPR *rightExpression);
 #endif

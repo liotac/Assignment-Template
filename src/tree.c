@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <boollib.h>
+#include <stdbool.h>
 #include "tree.h"
 #include "memory.h"
 
@@ -29,7 +29,7 @@ DECL *newDECLseq(int lineno, DECL *element, DECL *list)
     d = NEW(DECL);
     d->lineno = lineno;
     d->type = SEQ;
-    d->val.seq.element = element
+    d->val.seq.element = element;
     d->val.seq.list = list;
     return d;
 }
@@ -60,8 +60,8 @@ STMT *newSTMTif(int lineno, EXPR *condition, STMT *body)
     s = NEW(STMT);
     s->lineno = lineno;
     s->type = IF;
-    s->val.cond..condition = condition;
-    s->val.cond..body = body;
+    s->val.cond.condition = condition;
+    s->val.cond.body = body;
     return s;
 }
 
@@ -70,8 +70,8 @@ STMT *newSTMTwhile(int lineno, EXPR *condition, STMT *body)
     s = NEW(STMT);
     s->lineno = lineno;
     s->type = WHILE;
-    s->val.cond..condition = condition;
-    s->val.cond..body = body;
+    s->val.cond.condition = condition;
+    s->val.cond.body = body;
     return s;
 }
 
@@ -91,7 +91,7 @@ STMT *newSTMTread(int lineno, char *identifier)
     s = NEW(STMT);
     s->lineno = lineno;
     s->type = READ;
-    s->val.identifier = rdpr;
+    s->val.identifier = identifier;
     return s;
 }
 
@@ -100,7 +100,7 @@ STMT *newSTMTprint(int lineno, EXPR *printexpr)
     s = NEW(STMT);
     s->lineno = lineno;
     s->type = PRINT;
-    s->val.printepr = printexpr;
+    s->val.printexpr = printexpr;
     return s;
 }
 
@@ -122,7 +122,7 @@ EXPR *newEXPRstring(int lineno, char *stringLiteral)
     return e;
 }
 
-EXPR *newEXPRint(int lineno, int *intLiteral)
+EXPR *newEXPRint(int lineno, int intLiteral)
 { EXPR *e;
     e = NEW(EXPR);
     e->lineno = lineno;
@@ -131,7 +131,7 @@ EXPR *newEXPRint(int lineno, int *intLiteral)
     return e;
 }
 
-EXPR *newEXPRfloat(int lineno, float *floatLiteral)
+EXPR *newEXPRfloat(int lineno, float floatLiteral)
 { EXPR *e;
     e = NEW(EXPR);
     e->lineno = lineno;
@@ -140,11 +140,11 @@ EXPR *newEXPRfloat(int lineno, float *floatLiteral)
     return e;
 }
 
-EXPR *newEXPRbool(int lineno, bool *boolLiteral)
+EXPR *newEXPRbool(int lineno, bool boolLiteral)
 { EXPR *e;
     e = NEW(EXPR);
     e->lineno = lineno;
-    e->type = BOOL;
+    e->type = BOOLEAN;
     e->val.bval = boolLiteral;
     return e;
 }

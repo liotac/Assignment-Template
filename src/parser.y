@@ -76,7 +76,7 @@ statement : bREAD btIDENT bSEMICOLON { $$ = newSTMTread(yylineno, $2); }
           | bPRINT expression bSEMICOLON {$$ = newSTMTprint(yylineno, $2); }
           | btIDENT bASSIGN expression bSEMICOLON { $$ = newSTMTassignment(yylineno, $1, $3); }
           | bIF expression bLBRACE statements bRBRACE { $$ = newSTMTif(yylineno, $2, $4); }
-          | bIF expression bLBRACE statements bRBRACE bELSE blBRACE statements bRBRACE { $$ = newSTMTifel(yylineno, $2, $4, $8); }
+          | bIF expression bLBRACE statements bRBRACE bELSE bLBRACE statements bRBRACE { $$ = newSTMTifel(yylineno, $2, $4, $8); }
           | bWHILE expression bLBRACE statements bRBRACE { $$ = newSTMTwhile(yylineno, $2, $4); }
           ;
 expression : btIDENT { $$ = newEXPRidentifier(yylineno, $1); }
@@ -93,7 +93,7 @@ expression : btIDENT { $$ = newEXPRidentifier(yylineno, $1); }
            | expression bMUL expression { $$ = newEXPRbinary(yylineno, MUL, $1, $3); }
            | expression bDIV expression { $$ = newEXPRbinary(yylineno, DIV, $1, $3); }
            | bLPAREN expression bRPAREN { $$ = $2; }
-           | bNOT expression { $$ = newEXPRunary(yylineno, NOT, $1); }
-           | bSUB expression %prec bUMINUS { $$ = newEXPRunary(yylineno, NEG, $1); }
+           | bNOT expression { $$ = newEXPRunary(yylineno, NOT, $2); }
+           | bSUB expression %prec bUMINUS { $$ = newEXPRunary(yylineno, NEG, $2); }
            ;
 %%

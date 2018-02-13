@@ -44,29 +44,29 @@ escape \\[abfnrtv"\\]
 
 TRUE|FALSE {
     if (g_tokens){printf("tBOOLEAN(%s)\n", yytext); }
-    if (strcmp(yytext, "TRUE") == 0){ yylval.booval = 1; }
-    else { yylval.booval = 0; }
+    if (strcmp(yytext, "TRUE") == 0){ yylval.bval = 1; }
+    else { yylval.bval = 0; }
     return btBOOLEAN;
 }
 (0|([1-9][0-9]*))(\.[0-9]+) {
     if (g_tokens){printf("tFLOAT(%s)\n", yytext); }
-    yylval.fltval = atof(yytext);
+    yylval.fval = atof(yytext);
     return btFLOAT;
 }
 0|([1-9][0-9]*) {
     if (g_tokens){printf("tINT(%s)\n", yytext); }
-    yylval.intval = atoi(yytext);
+    yylval.ival = atoi(yytext);
     return btINT;
 }
 \"({character}|{symbol}|{escape})*\" {
     if (g_tokens){printf("tSTRING(%s)\n", yytext); }
-    yylval.strval = strdup(yytext);
+    yylval.sval = strdup(yytext);
     return btSTRING;
 }
 [a-zA-Z_][a-zA-Z0-9_]* {
     if (g_tokens){printf("tIDENT(%s)\n", yytext); }
-    yylval.strval = strdup(yytext);
-    return btIDENTIFIER;
+    yylval.identifier = strdup(yytext);
+    return btIDENT;
 }
 
 "//".*      if (g_tokens){printf("tCOMMENT(%s)\n", yytext); }

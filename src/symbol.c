@@ -22,7 +22,7 @@ SymbolTable *newSymbolTable()
     return t;
 }
 
-Symbol *putSymbol(SymbolTable *t, char *name, ExprType type)
+Symbol *putSymbol(SymbolTable *t, char *name, Type type)
 { Symbol *s;
     int i = Hash(name);
     for (s = t->table[i]; s; s= s->next)
@@ -56,13 +56,13 @@ Symbol *getSymbol(SymbolTable *t, char *name)
 void symPROG(SymbolTable *t, PROG *p)
 {
     symboltable = newSymbolTable();
-    symDECL(t, program->declarations);
-    symSTMT(t, program->statements);
+    symDECL(t, p->declarations);
+    symSTMT(t, p->statements);
 }
 
 void symDECL(SymbolTable *t, DECL *d)
 {
-    Symbol sym;
+    Symbol *sym;
     switch (d->type)
     {
         case SEQ:
@@ -77,13 +77,13 @@ void symDECL(SymbolTable *t, DECL *d)
              symEXPR(t, d->val.declaration.expression);
              break;
         default:
-            panic(s->lineno, "SYMBOL", "DECL");
+            panic(d->lineno, "SYMBOL", "DECL");
     }
 }
 
 void symSTMT(SymbolTable *t, STMT *s)
 {
-    Symbol sym;
+    Symbol *sym;
     switch (s->type)
     {
         case SEQ:
@@ -104,15 +104,18 @@ void symSTMT(SymbolTable *t, STMT *s)
             symSTMT(t, s->val.ifel.elsepart);
             break;
         case READ:
-            symEXPR(t, s->val.rdpr);
+            if ((sym = getSymbol(t, s->val.identifier)) == NULL)
+            {
+                panic(s->lineno, s->val.identifier, "undeclared");
+            }
             break;
         case PRINT:
-            symEXPR(t, s->val.rdpr);
+            symEXPR(t, s->val.printexpr);
             break;
         case ASSIGNMENT:
             if ((sym = getSymbol(t, s->val.assignment.identifier)) == NULL)
             {
-                panic(s->lineno, s->val.assigment.identifier, "undeclared");
+                panic(s->lineno, s->val.assignment.identifier, "undeclared");
             }
             symEXPR(t, s->val.assignment.expression);
             break;
@@ -123,11 +126,11 @@ void symSTMT(SymbolTable *t, STMT *s)
 
 void symEXPR(SymbolTable *t, EXPR *e)
 {
-    Symbol sym;
+    Symbol *sym;
     switch (e->type)
     {
         case IDENT:
-            if ((sym = getSymbol(t, e->val.identifier)) == NULL
+            if ((sym = getSymbol(t, e->val.identifier)) == NULL)
             {
                 panic(e->lineno, e->val.identifier, "undeclared");
             }
@@ -147,6 +150,6 @@ void symEXPR(SymbolTable *t, EXPR *e)
         case NOT:
             break;
         default:
-            panic(s->lineno, "SYMBOL", "STMT");
+            panic(e->lineno, "SYMBOL", "STMT");
     }
 }

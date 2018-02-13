@@ -15,14 +15,14 @@ typedef struct Symbol {
         bool bval;
     } val;
     */
-}
+} Symbol;
 
 typedef struct SymbolTable { Symbol *table[HashSize]; } SymbolTable;
 
 SymbolTable *newSymbolTable();
 
-SYMBOL *putSymbol(SymbolTable *t, char *name, Type type);
-SYMBOL *getSymbol(SymbolTable *t, char *name);
+Symbol *putSymbol(SymbolTable *t, char *name, Type type);
+Symbol *getSymbol(SymbolTable *t, char *name);
 
 void symPROG(SymbolTable *t, PROG *program);
 void symDECL(SymbolTable *t, DECL *declarations);
