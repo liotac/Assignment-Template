@@ -4,6 +4,10 @@
 #include "tree.h"
 #include "error.h"
 
+int indentLevel = 0;
+
+void indent() { for (int i = 0; i < indentLevel; i++) { printf("    "); } }
+
 void prettyPROG(PROG *p)
 {
     prettyDECL(p->declarations);
@@ -49,39 +53,36 @@ void prettySTMT(STMT *s)
                 prettySTMT(s->val.seq.list);
                 break;
             case ASSIGNMENT:
+                indent();
                 printf("%s = ", s->val.assignment.identifier);
                 prettyEXPR(s->val.assignment.expression);
                 printf(";\n");
                 break;
             case WHILE:
-                printf("while ");
-                prettyEXPR(s->val.cond.condition);
-                printf(" {\n");
-                prettySTMT(s->val.cond.body);
-                printf("}\n");
+                indent(); printf("while "); prettyEXPR(s->val.cond.condition); printf(" {\n");
+                indentLevel += 1; prettySTMT(s->val.cond.body); indentLevel -= 1;
+                indent(); printf("}\n");
                 break;
             case IF:
-                printf("if ");
-                prettyEXPR(s->val.cond.condition);
-                prettySTMT(s->val.cond.body);
-                printf(" {\n");
-                printf("\n}\n");
+                indent(); printf("if "); prettyEXPR(s->val.cond.condition); printf(" {\n");
+                indentLevel += 1; prettySTMT(s->val.cond.body); indentLevel -= 1;
+                indent(); printf("}\n");
                 break;
             case IFELSE:
-                printf("if ");
-                prettyEXPR(s->val.ifel.condition);
-                printf(" {\n");
-                prettySTMT(s->val.ifel.ifpart);
-                printf("\n} else {\n");
-                prettySTMT(s->val.ifel.elsepart);
-                printf("\n}\n");
+                indent(); printf("if "); prettyEXPR(s->val.ifel.condition); printf(" {\n");
+                indentLevel += 1; prettySTMT(s->val.ifel.ifpart); indentLevel -= 1;
+                indent(); printf("} else {\n");
+                indentLevel += 1; prettySTMT(s->val.ifel.elsepart); indentLevel -= 1;
+                indent(); printf("}\n");
                 break;
             case PRINT:
+                indent();
                 printf("print ");
                 prettyEXPR(s->val.printexpr);
                 printf(";\n");
                 break;
             case READ:
+                indent();
                 printf("read %s;\n", s->val.identifier);
                 break;
             default:
@@ -152,7 +153,7 @@ void prettyEXPR(EXPR *e)
                 prettyEXPR(e->val.binary.right);
                 printf(")");
                 break;
-                case MUL:
+            case MUL:
                 printf("(");
                 prettyEXPR(e->val.binary.left);
                 printf("*");

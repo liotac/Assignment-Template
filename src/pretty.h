@@ -3,7 +3,7 @@
 
 #include "tree.h"
 
-int indentLevel = 0;
+void indent();
 
 void prettyPROG(PROG *program);
 void prettyDECL(DECL *declarations);
