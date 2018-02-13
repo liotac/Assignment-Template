@@ -1,17 +1,17 @@
 CC = gcc
 CFLAGS = -Wall
 
-main: parser.tab.o lex.yy.o main.o tree.h tree.o symbol.h symbol.o memory.h memory.o error.h error.o pretty.h pretty.o
-	$(CC) *.o -o bin/compiler -lfl
+main: fb.scanner.o fb.parser.o tree.h tree.o symbol.h symbol.o error.h error.o memory.h memory.o pretty.h pretty.o main.o
+	$(CC) fb.scanner.o fb.parser.o tree.o symbol.o error.o memory.o pretty.o main.o -o bin/compiler -lfl
 
 # Parser (bison)
-parser.tab.c parser.tab.h: parser.y
-	bison --yacc --defines=parser.tab.c --output=parser.tab.h parser.y
+fb.parser.c fb.parser.h: parser.y
+	bison --yacc --defines=fb.parser.c --output=fb.parser.h parser.y
 
 # Scanner (flex)
-lex.yy.c: scanner.l parser.tab.h
-	flex -o lex.yy.c scanner.l
+fb.scanner.c: scanner.l fb.parser.h
+	flex -o fb.scanner.c scanner.l
 
 # Cleanup
 clean:
-	rm -f *.o lex.yy.c parser.tab.h parser.tab.c bin/*
+	rm -f bin/* out/* fb.*

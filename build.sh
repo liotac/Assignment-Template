@@ -10,9 +10,12 @@ case "$1" in
     ;;
 -b)
     make -C ./src > /dev/null
+    mv ./src/*.o ./src/out
     ;;
 "")
     make clean -C ./src > /dev/null
     make -C ./src > /dev/null
+    mv ./src/*.o ./src/out
     ;;
 esac
+
