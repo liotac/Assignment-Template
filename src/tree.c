@@ -4,23 +4,23 @@
 #include "memory.h"
 
 PROG *newPROG(int lineno, DECL *declarations, STMT *statements)
-{ PROGRAM *p
+{ PROG *p;
     p = NEW(PROG);
     p->lineno = lineno;
-    p->val.declarations = declarations;
-    p->val.statements = statements;
+    p->declarations = declarations;
+    p->statements = statements;
     return p;
 }
 
 
-DECL *newDECLdeclaration(int lineno, SYMBOL *identifier, ExprType type, EXPR *expression)
+DECL *newDECLdeclaration(int lineno, char *identifier, EXPR *expression, Type type)
 { DECL *d;
     d = NEW(DECL);
     d->lineno = lineno;
-    d->type = DECLARE;
-    d->val.identifier = identifier;
-    d->val.type = type;
-    d->val.expression = expression;
+    d->type = DECLARATION;
+    d->val.declaration.identifier = identifier;
+    d->val.declaration.expression = expression;
+    d->val.declaration.type = type;
     return d;
 }
 
@@ -29,19 +29,19 @@ DECL *newDECLseq(int lineno, DECL *element, DECL *list)
     d = NEW(DECL);
     d->lineno = lineno;
     d->type = SEQ;
-    d->val.element = element
-    d->val.list = list;
+    d->val.seq.element = element
+    d->val.seq.list = list;
     return d;
 }
 
 
-STMT *newSTMTassignment(int lineno, SYMBOL *identifier, EXPR *expression)
+STMT *newSTMTassignment(int lineno, char *identifier, EXPR *expression)
 { STMT *s;
     s = NEW(STMT);
     s->lineno = lineno;
-    s->type = ASSIGN;
-    s->val.identifier = identifier;
-    s->val.expression = expression;
+    s->type = ASSIGNMENT;
+    s->val.assignment.identifier = identifier;
+    s->val.assignment.expression = expression;
     return s;
 }
 
@@ -50,8 +50,8 @@ STMT *newSTMTseq(int lineno, STMT *element, STMT *list)
     s = NEW(STMT);
     s->lineno = lineno;
     s->type = SEQ;
-    s->val.element = element;
-    s->val.list = list;
+    s->val.seq.element = element;
+    s->val.seq.list = list;
     return s;
 }
 
@@ -60,8 +60,8 @@ STMT *newSTMTif(int lineno, EXPR *condition, STMT *body)
     s = NEW(STMT);
     s->lineno = lineno;
     s->type = IF;
-    s->val.condition = condition;
-    s->val.body = body;
+    s->val.cond..condition = condition;
+    s->val.cond..body = body;
     return s;
 }
 
@@ -70,8 +70,8 @@ STMT *newSTMTwhile(int lineno, EXPR *condition, STMT *body)
     s = NEW(STMT);
     s->lineno = lineno;
     s->type = WHILE;
-    s->val.condition = condition;
-    s->val.body = body;
+    s->val.cond..condition = condition;
+    s->val.cond..body = body;
     return s;
 }
 
@@ -80,31 +80,31 @@ STMT *newSTMTifel(int lineno, EXPR *condition, STMT *ifpart, STMT *elsepart)
     s = NEW(STMT);
     s->lineno = lineno;
     s->type = IFELSE;
-    s->val.condition = condition;
-    s->val.ifpart = ifpart;
-    s->val.elsepart = elsepart;
+    s->val.ifel.condition = condition;
+    s->val.ifel.ifpart = ifpart;
+    s->val.ifel.elsepart = elsepart;
     return s;
 }
 
-STMT *newSTMTread(int lineno, EXPR *rdpr)
+STMT *newSTMTread(int lineno, char *identifier)
 { STMT *s;
     s = NEW(STMT);
     s->lineno = lineno;
     s->type = READ;
-    s->val.rdpr = rdpr;
+    s->val.identifier = rdpr;
     return s;
 }
 
-STMT *newSTMTprint(int lineno, EXPR *rdpr)
+STMT *newSTMTprint(int lineno, EXPR *printexpr)
 { STMT *s;
     s = NEW(STMT);
     s->lineno = lineno;
     s->type = PRINT;
-    s->val.rdpr = rdpr;
+    s->val.printepr = printexpr;
     return s;
 }
 
-EXPR *newEXPRidentifier(int lineno, SYMBOL *identifier)
+EXPR *newEXPRidentifier(int lineno, char *identifier)
 { EXPR *e;
     e = NEW(EXPR);
     e->lineno = lineno;
@@ -118,7 +118,7 @@ EXPR *newEXPRstring(int lineno, char *stringLiteral)
     e = NEW(EXPR);
     e->lineno = lineno;
     e->type = STRING;
-    e->val.sLit = stringLiteral;
+    e->val.sval = stringLiteral;
     return e;
 }
 
@@ -127,7 +127,7 @@ EXPR *newEXPRint(int lineno, int *intLiteral)
     e = NEW(EXPR);
     e->lineno = lineno;
     e->type = INT;
-    e->val.iLit = intLiteral;
+    e->val.ival= intLiteral;
     return e;
 }
 
@@ -136,7 +136,7 @@ EXPR *newEXPRfloat(int lineno, float *floatLiteral)
     e = NEW(EXPR);
     e->lineno = lineno;
     e->type = FLOAT;
-    e->val.fLit = floatLiteral;
+    e->val.fval = floatLiteral;
     return e;
 }
 
@@ -145,11 +145,11 @@ EXPR *newEXPRbool(int lineno, bool *boolLiteral)
     e = NEW(EXPR);
     e->lineno = lineno;
     e->type = BOOL;
-    e->val.bLit = boolLiteral;
+    e->val.bval = boolLiteral;
     return e;
 }
 
-EXPR *newEXPRunary(int lineno, ExprType type, EXPR *unaryExpression)
+EXPR *newEXPRunary(int lineno, Type type, EXPR *unaryExpression)
 { EXPR *e;
     e = NEW(EXPR);
     e->lineno = lineno;
@@ -158,12 +158,12 @@ EXPR *newEXPRunary(int lineno, ExprType type, EXPR *unaryExpression)
     return e;
 }
 
-EXPR *newEXPRbinary(int lineno, ExprType type, EXPR *leftExpression, EXPR *rightExpression)
+EXPR *newEXPRbinary(int lineno, Type type, EXPR *leftExpression, EXPR *rightExpression)
 { EXPR *e;
     e = NEW(EXPR);
     e->lineno = lineno;
     e->type = type;
-    e->val.left = leftExpression;
-    e->val.right = rightExpression;
+    e->val.binary.left = leftExpression;
+    e->val.binary.right = rightExpression;
     return e;
 }

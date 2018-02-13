@@ -3,31 +3,33 @@
 
 #define HashSize 317
 
-typedef struct SYMBOL {
+typedef struct Symbol {
     char *name;
-    ExprType type;
-    struct SYMBOL *next;
+    Type type;
+    struct Symbol *next;
+    /*
     union {
-        char *sLit;
-        int iLit;
-        float fLit;
-        bool bLit;
+        char *sval;
+        int ival;
+        float fval;
+        bool bval;
     } val;
+    */
 }
 
 typedef struct SymbolTable { Symbol *table[HashSize]; } SymbolTable;
 
 SymbolTable *newSymbolTable();
 
-SYMBOL *putSymbol(SymbolTable *t, char *name, ExprType type, int lineno);
+SYMBOL *putSymbol(SymbolTable *t, char *name, Type type);
 SYMBOL *getSymbol(SymbolTable *t, char *name);
 
-int symPROG(SymbolTable *t, PROG *program);
-int symDECL(SymbolTable *t, DECL *declarations);
-int symSTMT(SymbolTable *t, STMT *statements);
-int symEXPR(SymbolTable *t, EXPR *expressions);
+void symPROG(SymbolTable *t, PROG *program);
+void symDECL(SymbolTable *t, DECL *declarations);
+void symSTMT(SymbolTable *t, STMT *statements);
+void symEXPR(SymbolTable *t, EXPR *expressions);
 
 // ----------------------------------------------------------------------------
 // Global SymbolTable
-//
+
 SymbolTable *symboltable;

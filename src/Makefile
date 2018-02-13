@@ -1,20 +1,17 @@
 CC = gcc
 CFLAGS = -Wall
 
-main: bin/parser.tab.o bin/lex.yy.o bin/main.o
-	$(CC) bin/lex.yy.o bin/parser.tab.o bin/main.o -o bin/compiler -lfl
-
-bin/main.o: main.c
-	$(CC) -c main.c -o bin/main.o
+main: parser.tab.o lex.yy.o main.o tree.h tree.o symbol.h symbol.o memory.h memory.o error.h error.o
+	$(CC) *.o -o bin/compiler -lfl
 
 # Parser (bison)
-bin/parser.tab.c bin/parser.tab.h: parser.y
-	bison --yacc --defines=bin/parser.tab.c --output=bin/parser.tab.h parser.y
+parser.tab.c parser.tab.h: parser.y
+	bison --yacc --defines=parser.tab.c --output=parser.tab.h parser.y
 
 # Scanner (flex)
-bin/lex.yy.c: scanner.l bin/parser.tab.h
-	flex -o bin/lex.yy.c scanner.l
+lex.yy.c: scanner.l parser.tab.h
+	flex -o lex.yy.c scanner.l
 
 # Cleanup
 clean:
-	rm -f bin/*
+	rm -f *.o lex.yy.c parser.tab.h parser.tab.c bin/*

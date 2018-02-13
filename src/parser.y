@@ -1,40 +1,54 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "tree.h"
 #include "error.h"
 
-// Root of our AST
-PROG *root;
+extern PROG *root; // Root of our AST
+extern int g_tokens; // Global compiler mode token: prints all tokens, one per line
 
-// Global compiler mode token: prints all tokens, one per line
-extern int g_tokens;
-
-// Flex stuff
 extern int yylineno;
 int yylex();
+void yyerror(const char *error)
+{
+    fprintf(stderr, "Error: (line %d) %s during PARSE\n", yylineno, error);
+    exit(1);
+}
 %}
-
 %locations
 %error-verbose
 %code requires
 {
     #include "tree.h"
+    #include <stdbool.h>
 }
 
 %union {
-    void *value;
+    int ival;
+    float fval;
+    bool bval;
+    char *sval;
+    char *identifier;
+    PROG *prog;
+    DECL *decl;
+    STMT *stmt;
+    EXPR *expr;
 }
 
-%type <exp> program exp
+%type <prog> program
+%type <decl> declarations declaration
+%type <stmt> statements statement
+%type <expr> expression
 
-%token <intval> btINT
-%token <fltval> btFLOAT
-%token <strval> btSTRING
-%token <booval> btBOOLEAN
-%token <strval> btIDENT
-%token bADD bSUB bMUL bDIV bVAR bINT bFLOAT bBOOLEAN bSTRING bLPAREN bRPAREN bIF bELSE bWHILE
-%token bLBRACE bRBRACE bNOT bNEQ bEQL bAND bOR bASSIGN bCOLON bSEMICOLON bPRINT bREAD
+%token <ival> btINT
+%token <fval> btFLOAT
+%token <sval> btSTRING
+%token <bval> btBOOLEAN
+%token <identifier> btIDENT
+%token bADD bSUB bMUL bDIV bNOT bNEQ bEQL bAND bOR bASSIGN bVAR bCOLON bSEMICOLON
+%token bLBRACE bRBRACE bPRINT bREAD bLPAREN bRPAREN bIF bELSE bWHILE
+%token bINT bFLOAT bBOOLEAN bSTRING 
 
 %left bOR
 %left bAND
@@ -45,41 +59,41 @@ int yylex();
 
 %start program
 %%
-program : declarations statements { root = $1; }
+program : declarations statements { root = newPROG(yylineno, $1, $2); }
         ;
-declarations : %empty
-             | declaration declarations
+declarations : %empty { $$ = NULL; }
+             | declaration declarations {newDECLseq(yylineno, $1, $2); }
              ;
-declaration : bVAR btIDENT bCOLON type bASSIGN expression bSEMICOLON
+declaration : bVAR btIDENT bCOLON bINT bASSIGN expression bSEMICOLON { $$ = newDECLdeclaration(yylineno, $2, $6, INT); }
+            | bVAR btIDENT bCOLON bFLOAT bASSIGN expression bSEMICOLON { $$ = newDECLdeclaration(yylineno, $2, $6, FLOAT); }
+            | bVAR btIDENT bCOLON bBOOLEAN bASSIGN expression bSEMICOLON { $$ = newDECLdeclaration(yylineno, $2, $6, BOOLEAN); }
+            | bVAR btIDENT bCOLON bSTRING bASSIGN expression bSEMICOLON { $$ = newDECLdeclaration(yylineno, $2, $6, STRING); }
             ;
-statements : %empty
-           | statement statements
+statements : %empty { $$ = NULL; }
+           | statement statements { $$ = newSTMTseq(yylineno, $1, $2); }
            ;
-statement : bREAD btIDENT bSEMICOLON
-          | bPRINT expression bSEMICOLON
-          | btIDENT bASSIGN expression bSEMICOLON
-          | bIF expression bLBRACE statements bRBRACE optionalelse
-          | bWHILE expression bLBRACE statements bRBRACE
+statement : bREAD btIDENT bSEMICOLON { $$ = newSTMTread(yylineno, $2); }
+          | bPRINT expression bSEMICOLON {$$ = newSTMTprint(yylineno, $2); }
+          | btIDENT bASSIGN expression bSEMICOLON { $$ = newSTMTassignment(yylineno, $1, $3); }
+          | bIF expression bLBRACE statements bRBRACE { $$ = newSTMTif(yylineno, $2, $4); }
+          | bIF expression bLBRACE statements bRBRACE bELSE blBRACE statements bRBRACE { $$ = newSTMTifel(yylineno, $2, $4, $8); }
+          | bWHILE expression bLBRACE statements bRBRACE { $$ = newSTMTwhile(yylineno, $2, $4); }
           ;
-expression : btIDENT
-           | literal
-           | expression bOR expression
-           | expression bAND expression
-           | expression bEQL expression
-           | expression bNEQ expression
-           | expression bADD expression
-           | expression bSUB expression
-           | expression bMUL expression
-           | expression bDIV expression
-           | bLPAREN expression bRPAREN
-           | bNOT expression
-           | bSUB expression %prec bUMINUS
+expression : btIDENT { $$ = newEXPRidentifier(yylineno, $1); }
+           | btINT { $$ = newEXPRint(yylineno, $1); }
+           | btFLOAT { $$ = newEXPRfloat(yylineno, $1); }
+           | btSTRING  { $$ = newEXPRstring(yylineno, $1); }
+           | btBOOLEAN { $$ = newEXPRbool(yylineno, $1); }
+           | expression bOR expression { $$ = newEXPRbinary(yylineno, OR, $1, $3); }
+           | expression bAND expression { $$ = newEXPRbinary(yylineno, AND, $1, $3); }
+           | expression bEQL expression { $$ = newEXPRbinary(yylineno, EQL, $1, $3); }
+           | expression bNEQ expression { $$ = newEXPRbinary(yylineno, NEQ, $1, $3); }
+           | expression bADD expression { $$ = newEXPRbinary(yylineno, ADD, $1, $3); }
+           | expression bSUB expression { $$ = newEXPRbinary(yylineno, SUB, $1, $3); }
+           | expression bMUL expression { $$ = newEXPRbinary(yylineno, MUL, $1, $3); }
+           | expression bDIV expression { $$ = newEXPRbinary(yylineno, DIV, $1, $3); }
+           | bLPAREN expression bRPAREN { $$ = $2; }
+           | bNOT expression { $$ = newEXPRunary(yylineno, NOT, $1); }
+           | bSUB expression %prec bUMINUS { $$ = newEXPRunary(yylineno, NEG, $1); }
            ;
-literal : btINT | btFLOAT | btSTRING | btBOOLEAN
-        ;
-type : bINT | bFLOAT | bSTRING | bBOOLEAN
-     ;
-optionalelse : %empty
-             | bELSE bLBRACE statements bRBRACE
-             ;
 %%

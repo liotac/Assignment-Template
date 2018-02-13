@@ -7,7 +7,7 @@
 #include "error.h"
 
 // ----------------------------------------------------------------------------
-// Constructors for SYMBOL and SymbolTable
+// Constructors for Symbol and SymbolTable
 
 int Hash(char *str)
 { int hash = 0;
@@ -18,20 +18,20 @@ int Hash(char *str)
 SymbolTable *newSymbolTable()
 { SymbolTable *t;
     t = NEW(SymbolTable);
-    for (int i = 0; i < HashSize; i++) t->table = NULL;
+    for (int i = 0; i < HashSize; i++) t->table[i] = NULL;
     return t;
 }
 
-SYMBOL *putSYMBOL(SymbolTable *t, char *name, ExprType type, int lineno)
-{ SYMBOL *s
+Symbol *putSymbol(SymbolTable *t, char *name, ExprType type)
+{ Symbol *s;
     int i = Hash(name);
     for (s = t->table[i]; s; s= s->next)
     {
         if (strcmp(s->name, name) == 0) {
-            panicMsg(name, lineno, "identifier was already declared");
+            return NULL;
         }
     }
-    s = NEW(SYMBOL);
+    s = NEW(Symbol);
     s->name = name;
     s->type = type;
     s->next = t->table[i];
@@ -39,8 +39,8 @@ SYMBOL *putSYMBOL(SymbolTable *t, char *name, ExprType type, int lineno)
     return s;
 }
 
-SYMBOL *getSYMBOL(SymbolTable *t, char *name)
-{ SYMBOL *s;
+Symbol *getSymbol(SymbolTable *t, char *name)
+{ Symbol *s;
     int i = Hash(name);
     for (s = t->table[i]; s; s = s->next)
     {
@@ -56,45 +56,52 @@ SYMBOL *getSYMBOL(SymbolTable *t, char *name)
 void symPROG(SymbolTable *t, PROG *p)
 {
     symboltable = newSymbolTable();
-    symDECL(t, program->val.declarations);
-    symSTMT(t, program->val.statements);
+    symDECL(t, program->declarations);
+    symSTMT(t, program->statements);
 }
 
 void symDECL(SymbolTable *t, DECL *d)
 {
+    Symbol sym;
     switch (d->type)
     {
         case SEQ:
-             symDECL(t, d->val.element);
-             symDECL(t, d->val.list);
+             symDECL(t, d->val.seq.element);
+             symDECL(t, d->val.seq.list);
              break;
-        case DECLARE:
-             SYMBOL *s = putSYMBOL(t, d->val.identifier, d->type);
-             symEXPR(t, d->val.expression);
+        case DECLARATION:
+             if ((sym = putSymbol(t, d->val.declaration.identifier, d->type)) == NULL)
+             {
+                 panic(d->lineno, d->val.declaration.identifier, "already declared");
+             }
+             symEXPR(t, d->val.declaration.expression);
              break;
+        default:
+            panic(s->lineno, "SYMBOL", "DECL");
     }
 }
 
 void symSTMT(SymbolTable *t, STMT *s)
 {
-    switch (e->type)
+    Symbol sym;
+    switch (s->type)
     {
         case SEQ:
-            symSTMT(t, s->val.element);
-            symSTMT(t, s->val.list);
+            symSTMT(t, s->val.seq.element);
+            symSTMT(t, s->val.seq.list);
             break;
         case WHILE:
-            symEXPR(t, s->val.condition);
-            symSTMT(t, s->val.body);
+            symEXPR(t, s->val.cond.condition);
+            symSTMT(t, s->val.cond.body);
             break;
         case IF:
-            symEXPR(t, s->val.condition);
-            symSTMT(t, s->val.body);
+            symEXPR(t, s->val.cond.condition);
+            symSTMT(t, s->val.cond.body);
             break;
         case IFELSE:
-            symEXPR(t, s->val.condition);
-            symSTMT(t, s->val.ifpart);
-            symSTMT(t, s->val.elsepart);
+            symEXPR(t, s->val.ifel.condition);
+            symSTMT(t, s->val.ifel.ifpart);
+            symSTMT(t, s->val.ifel.elsepart);
             break;
         case READ:
             symEXPR(t, s->val.rdpr);
@@ -102,22 +109,44 @@ void symSTMT(SymbolTable *t, STMT *s)
         case PRINT:
             symEXPR(t, s->val.rdpr);
             break;
-        case ASSIGN:
-            SYMBOL *i = getSYMBOL(t, s->val.identifier);
-            symEXPR(t, s->val.expression);
+        case ASSIGNMENT:
+            if ((sym = getSymbol(t, s->val.assignment.identifier)) == NULL)
+            {
+                panic(s->lineno, s->val.assigment.identifier, "undeclared");
+            }
+            symEXPR(t, s->val.assignment.expression);
             break;
+        default:
+            panic(s->lineno, "SYMBOL", "STMT");
     }
 }
 
 void symEXPR(SymbolTable *t, EXPR *e)
 {
+    Symbol sym;
     switch (e->type)
     {
         case IDENT:
-            Symbol *id = getSymbol(t, e->val.identifier);
-            if (i == NULL)
+            if ((sym = getSymbol(t, e->val.identifier)) == NULL
             {
-                panicMsg(e->val.identifier, e->lineno, "identifier not declared yet");
+                panic(e->lineno, e->val.identifier, "undeclared");
             }
+        case STRING:
+        case INT:
+        case BOOLEAN:
+        case FLOAT:
+        case OR:
+        case AND:
+        case EQL:
+        case NEQ:
+        case ADD:
+        case SUB:
+        case MUL:
+        case DIV:
+        case NEG:
+        case NOT:
+            break;
+        default:
+            panic(s->lineno, "SYMBOL", "STMT");
     }
 }

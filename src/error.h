@@ -1,3 +1,1 @@
-void panic(char *error, int lineno);
-void panic(char *error, int lineno, char *msg);
-void yyerror(const char *error);
+void panic(int lineno, char *error, char *msg);
