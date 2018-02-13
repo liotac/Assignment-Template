@@ -7,7 +7,7 @@
 // Node identification type
 
 typedef enum {
-    SEQ,
+    SEQ,                                    // declarations or statements
     DECLARATION,
     WHILE, IF, IFELSE,  // conditionals
     READ, PRINT,        // CLI expressions

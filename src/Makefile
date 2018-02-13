@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall
 
-main: parser.tab.o lex.yy.o main.o tree.h tree.o symbol.h symbol.o memory.h memory.o error.h error.o
+main: parser.tab.o lex.yy.o main.o tree.h tree.o symbol.h symbol.o memory.h memory.o error.h error.o pretty.y pretty.o
 	$(CC) *.o -o bin/compiler -lfl
 
 # Parser (bison)

@@ -4,6 +4,7 @@
 #include "symbol.h"
 #include "memory.h"
 #include "error.h"
+#include "pretty.h"
 
 int yylex();
 void yyparse();
