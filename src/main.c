@@ -77,6 +77,7 @@ int main(int argc, char **argv)
             case PRETTY:
             case PARSE :
                 yyparse();
+                if (mode == PRETTY) { prettyPROG(root); }
                 break;
         }
         if (OK) 

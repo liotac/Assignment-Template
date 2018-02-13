@@ -62,7 +62,7 @@ void yyerror(const char *error)
 program : declarations statements { root = newPROG(yylineno, $1, $2); }
         ;
 declarations : %empty { $$ = NULL; }
-             | declaration declarations {newDECLseq(yylineno, $1, $2); }
+             | declaration declarations { $$ = newDECLseq(yylineno, $1, $2); }
              ;
 declaration : bVAR btIDENT bCOLON bINT bASSIGN expression bSEMICOLON { $$ = newDECLdeclaration(yylineno, $2, $6, INT); }
             | bVAR btIDENT bCOLON bFLOAT bASSIGN expression bSEMICOLON { $$ = newDECLdeclaration(yylineno, $2, $6, FLOAT); }

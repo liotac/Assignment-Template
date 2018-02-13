@@ -1485,7 +1485,7 @@ yyreduce:
 
   case 4:
 #line 65 "parser.y" /* yacc.c:1646  */
-    {newDECLseq(yylineno, (yyvsp[-1].decl), (yyvsp[0].decl)); }
+    { (yyval.decl) = newDECLseq(yylineno, (yyvsp[-1].decl), (yyvsp[0].decl)); }
 #line 1490 "parser.tab.h" /* yacc.c:1646  */
     break;
 
