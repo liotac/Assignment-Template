@@ -24,7 +24,7 @@ SymbolTable *newSymbolTable();
 Symbol *putSymbol(SymbolTable *t, char *name, Type type);
 Symbol *getSymbol(SymbolTable *t, char *name);
 
-void symPROG(SymbolTable *t, PROG *program);
+void symPROG(PROG *program);
 void symDECL(SymbolTable *t, DECL *declarations);
 void symSTMT(SymbolTable *t, STMT *statements);
 void symEXPR(SymbolTable *t, EXPR *expressions);

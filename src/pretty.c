@@ -93,92 +93,90 @@ void prettySTMT(STMT *s)
 
 void prettyEXPR(EXPR *e)
 {
-    if (e) {
-        switch (e->type)
-        {
-            case IDENT:
-                printf("%s", e->val.identifier);
-                break;
-            case STRING:
-                printf("%s", e->val.sval);
-                break;
-            case INT:
-                printf("%d", e->val.ival);
-                break;
-            case BOOLEAN:
-                printf("%d", e->val.bval);
-                break;
-            case FLOAT:
-                printf("%f", e->val.fval);
-                break;
-            case OR:
-                printf("(");
-                prettyEXPR(e->val.binary.left);
-                printf("||");
-                prettyEXPR(e->val.binary.right);
-                printf(")");
-                break;
-            case AND:
-                printf("(");
-                prettyEXPR(e->val.binary.left);
-                printf("&&");
-                prettyEXPR(e->val.binary.right);
-                printf(")");
-                break;
-            case EQL:
-                printf("(");
-                prettyEXPR(e->val.binary.left);
-                printf("==");
-                prettyEXPR(e->val.binary.right);
-                printf(")");
-                break;
-            case NEQ:
-                printf("(");
-                prettyEXPR(e->val.binary.left);
-                printf("!=");
-                prettyEXPR(e->val.binary.right);
-                printf(")");
-                break;
-            case ADD:
-                printf("(");
-                prettyEXPR(e->val.binary.left);
-                printf("+");
-                prettyEXPR(e->val.binary.right);
-                printf(")");
-                break;
-            case SUB:
-                printf("(");
-                prettyEXPR(e->val.binary.left);
-                printf("-");
-                prettyEXPR(e->val.binary.right);
-                printf(")");
-                break;
-            case MUL:
-                printf("(");
-                prettyEXPR(e->val.binary.left);
-                printf("*");
-                prettyEXPR(e->val.binary.right);
-                printf(")");
-                break;
-            case DIV:
-                printf("(");
-                prettyEXPR(e->val.binary.left);
-                printf("/");
-                prettyEXPR(e->val.binary.right);
-                printf(")");
-                break;
-            case NEG:
-                printf("-(");
-                prettyEXPR(e->val.unary);
-                printf(")");
-                break;
-            case NOT:
-                printf("!(");
-                prettyEXPR(e->val.unary);
-                printf(")");
-                break;
-            default:
-                panic(e->lineno, "PRETTY", "EXPR");
-        }
+    switch (e->type)
+    {
+        case IDENT:
+            printf("%s", e->val.identifier);
+            break;
+        case STRING:
+            printf("%s", e->val.sval);
+            break;
+        case INT:
+            printf("%d", e->val.ival);
+            break;
+        case BOOLEAN:
+            printf("%d", e->val.bval);
+            break;
+        case FLOAT:
+            printf("%f", e->val.fval);
+            break;
+        case OR:
+            printf("(");
+            prettyEXPR(e->val.binary.left);
+            printf("||");
+            prettyEXPR(e->val.binary.right);
+            printf(")");
+            break;
+        case AND:
+            printf("(");
+            prettyEXPR(e->val.binary.left);
+            printf("&&");
+            prettyEXPR(e->val.binary.right);
+            printf(")");
+            break;
+        case EQL:
+            printf("(");
+            prettyEXPR(e->val.binary.left);
+            printf("==");
+            prettyEXPR(e->val.binary.right);
+            printf(")");
+            break;
+        case NEQ:
+            printf("(");
+            prettyEXPR(e->val.binary.left);
+            printf("!=");
+            prettyEXPR(e->val.binary.right);
+            printf(")");
+            break;
+        case ADD:
+            printf("(");
+            prettyEXPR(e->val.binary.left);
+            printf("+");
+            prettyEXPR(e->val.binary.right);
+            printf(")");
+            break;
+        case SUB:
+            printf("(");
+            prettyEXPR(e->val.binary.left);
+            printf("-");
+            prettyEXPR(e->val.binary.right);
+            printf(")");
+            break;
+        case MUL:
+            printf("(");
+            prettyEXPR(e->val.binary.left);
+            printf("*");
+            prettyEXPR(e->val.binary.right);
+            printf(")");
+            break;
+        case DIV:
+            printf("(");
+            prettyEXPR(e->val.binary.left);
+            printf("/");
+            prettyEXPR(e->val.binary.right);
+            printf(")");
+            break;
+        case NEG:
+            printf("-(");
+            prettyEXPR(e->val.unary);
+            printf(")");
+            break;
+        case NOT:
+            printf("!(");
+            prettyEXPR(e->val.unary);
+            printf(")");
+            break;
+        default:
+            panic(e->lineno, "PRETTY", "EXPR");
     }
 }
