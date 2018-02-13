@@ -4,7 +4,7 @@
 #include <string.h>
 #include "parser.tab.h"
 #define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno;
-int g_tokens;
+extern int g_tokens;
 int yylex();
 %}
 symbol [-~@#$%^&*+/`<>=_|'.,;:!?{}\[\]() ]

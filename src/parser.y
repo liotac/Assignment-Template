@@ -2,17 +2,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tree.h"
+#include "error.h"
 
 // Root of our AST
-extern Exp *root;
+PROG *root;
 
 // Global compiler mode token: prints all tokens, one per line
-int g_tokens;
+extern int g_tokens;
 
 // Flex stuff
 extern int yylineno;
 int yylex();
-void yyerror(const char *s) { fprintf(stderr, "Error: (line %d) %s\n", yylineno, s); exit(1); }
 %}
 
 %locations
@@ -24,7 +24,6 @@ void yyerror(const char *s) { fprintf(stderr, "Error: (line %d) %s\n", yylineno,
 
 %union {
     void *value;
-    Exp *exp;
 }
 
 %type <exp> program exp
@@ -46,7 +45,7 @@ void yyerror(const char *s) { fprintf(stderr, "Error: (line %d) %s\n", yylineno,
 
 %start program
 %%
-program : declarations statements { root =$1; }
+program : declarations statements { root = $1; }
         ;
 declarations : %empty
              | declaration declarations
