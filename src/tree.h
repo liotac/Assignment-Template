@@ -30,8 +30,11 @@ typedef struct EXPR {
             float fval;
             bool bval;
             struct EXPR *unary;
-            struct {struct EXPR *left; struct EXPR *right;} binary;
+            struct { struct EXPR *left; struct EXPR *right; } binary;
     } val;
+    struct { Type type;
+             union { char *sval; int ival; float fval; bool bval; } literal;
+    } eval;
 } EXPR;
 
 typedef struct DECL {

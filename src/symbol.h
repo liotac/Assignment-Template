@@ -7,14 +7,12 @@ typedef struct Symbol {
     char *name;
     Type type;
     struct Symbol *next;
-    /*
     union {
         char *sval;
         int ival;
         float fval;
         bool bval;
-    } val;
-    */
+    } eval;
 } Symbol;
 
 typedef struct SymbolTable { Symbol *table[HashSize]; } SymbolTable;
