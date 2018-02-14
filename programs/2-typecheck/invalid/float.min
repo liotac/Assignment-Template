@@ -1,2 +1,0 @@
-// float need a 0 before the dot
-var floating : float = .00123;

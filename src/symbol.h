@@ -1,3 +1,5 @@
+#ifndef SYMBOL_H
+#define SYMBOL_H
 #include <stdbool.h>
 #include "tree.h"
 
@@ -31,3 +33,4 @@ void symEXPR(SymbolTable *t, EXPR *expressions);
 // Global SymbolTable
 
 SymbolTable *symboltable;
+#endif

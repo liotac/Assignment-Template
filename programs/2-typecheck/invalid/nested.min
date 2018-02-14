@@ -1,4 +1,0 @@
-// conditional of while cant be a statement
-var nested : string = "\"";
-
-while while nested {} {}

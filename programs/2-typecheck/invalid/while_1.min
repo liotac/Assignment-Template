@@ -1,0 +1,5 @@
+var a : float = 1.0;
+
+while a {
+    print a;
+}

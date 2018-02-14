@@ -1,0 +1,2 @@
+// b undeclared
+var a : int = b;

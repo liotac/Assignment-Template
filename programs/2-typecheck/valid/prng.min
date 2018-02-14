@@ -5,12 +5,14 @@ var p : float = 15485867.0;
 var q : float = 23878409.0;
 
 var M : float = p * q;
-var M_int : int = p * q;
+var M_int : int = 0;
 
 var value : float = 0.0;
 var actual : int = seed;
 var result : float = 0.0;
 var remainder : int = 0;
+var product : int = 0;
+var factor  : int = 0;
 
 var n : int = 0;
 

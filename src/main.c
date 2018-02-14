@@ -5,6 +5,7 @@
 #include "memory.h"
 #include "error.h"
 #include "pretty.h"
+#include "type.h"
 
 int yylex();
 void yyparse();
@@ -35,7 +36,7 @@ int main(int argc, char **argv)
         else if (strcmp(input, "tokens") == 0) { mode = TOKENS; OK = 0; }
         else if (strcmp(input, "parse") == 0) { mode = PARSE; OK = 1; }
         else if (strcmp(input, "pretty") == 0) { mode = PRETTY; OK = 0; }
-        else if (strcmp(input, "symbol") == 0) { mode = SYMBOL; OK = 1; }
+        else if (strcmp(input, "symbol") == 0) { mode = SYMBOL; OK = 0; }
         else if (strcmp(input, "typecheck") == 0) { mode = TYPECHECK; OK = 1; }
         else if (strcmp(input, "codegen") == 0) { mode = CODEGEN; OK = 0; }
         else { fprintf(stderr, "Incorrect arguments\n"); return -1; }
@@ -57,14 +58,37 @@ int main(int argc, char **argv)
                 symPROG(root); 
                 Symbol *s;
                 printf("Type\tName\n");
+                char *typestr;
                 for (int i = 0; i < HashSize; i ++)
                 {
                     s = symboltable->table[i];
                     while (s) {
-                        printf("%d\t%s\n", s->type, s->name);
+                        switch (s->type)
+                        {
+                            case INT:
+                                typestr = "int";
+                                break;
+                            case FLOAT:
+                                typestr = "float";
+                                break;
+                            case STRING:
+                                typestr = "string";
+                                break;
+                            case BOOLEAN:
+                                typestr = "boolean";
+                                break;
+                            default:
+                                break;
+                        }
+                        printf("%s\t%s\n", typestr, s->name);
                         s = s->next;
                     }
                 }
+            }
+            else if (mode == TYPECHECK)
+            {
+                symPROG(root); 
+                typePROG(symboltable, root);
             }
         }
 

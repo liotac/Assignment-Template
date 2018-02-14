@@ -71,7 +71,7 @@ void symDECL(SymbolTable *t, DECL *d)
                  symDECL(t, d->val.seq.list);
                  break;
             case DECLARATION:
-                 sym = putSymbol(t, d->val.declaration.identifier, d->type);
+                 sym = putSymbol(t, d->val.declaration.identifier, d->val.declaration.type);
                  if (sym == NULL)
                  {
                      panic(d->lineno, d->val.declaration.identifier, "already declared");
@@ -145,6 +145,7 @@ void symEXPR(SymbolTable *t, EXPR *e)
         case INT:
         case BOOLEAN:
         case FLOAT:
+            break;
         case OR:
         case AND:
         case EQL:
@@ -153,8 +154,12 @@ void symEXPR(SymbolTable *t, EXPR *e)
         case SUB:
         case MUL:
         case DIV:
+                symEXPR(t, e->val.binary.left);
+                symEXPR(t, e->val.binary.right);
+                break;
         case NEG:
         case NOT:
+                symEXPR(t, e->val.unary);
             break;
         default:
             panic(e->lineno, "SYMBOL", "STMT");

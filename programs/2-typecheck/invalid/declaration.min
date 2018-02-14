@@ -1,4 +1,0 @@
-// statement can't appear before declarations
-if 1 + 1 == 2 { print "Welcome to a simple program }
-
-var b : int = 3;
