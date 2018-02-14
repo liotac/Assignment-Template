@@ -55,6 +55,7 @@ typedef struct STMT {
             EXPR *printexpr;
             char *identifier;
     } val;
+    Type evaltype;
 } STMT;
 
 typedef struct PROG {

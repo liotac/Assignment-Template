@@ -5,6 +5,7 @@
 #include "memory.h"
 #include "error.h"
 #include "pretty.h"
+#include "code.h"
 #include "type.h"
 
 int yylex();
@@ -89,6 +90,12 @@ int main(int argc, char **argv)
             {
                 symPROG(root); 
                 typePROG(symboltable, root);
+            }
+            else if (mode == CODEGEN)
+            {
+                symPROG(root); 
+                typePROG(symboltable, root);
+                codePROG(root);
             }
         }
 

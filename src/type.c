@@ -67,6 +67,7 @@ void typeSTMT(SymbolTable *t, STMT *s)
                 break;
             case PRINT:
                 cnd = typeEXPR(t, s->val.printexpr);
+                s->evaltype = cnd;
                 if (!(cnd == INT || cnd == FLOAT || cnd == BOOLEAN || cnd == STRING))
                 {
                     panic(s->lineno, "TYPECHECK", "STMT PRINT");
