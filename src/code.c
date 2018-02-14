@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 #include "symbol.h"
 #include "code.h"
 #include "tree.h"
@@ -11,9 +12,24 @@ extern SymbolTable *symboltable;
 
 void idn() { for (int i = 0; i < idlvl; i++) { fprintf(fp,"    "); } }
 
-void codePROG(PROG *p)
+void codePROG(PROG *p, char *file)
 {
-    fp=fopen("foo.c", "w");
+    // Found on stackoverflow
+    char *end = file + strlen(file);
+
+    while (end > file && *end != '.') {
+        --end;
+    }
+
+    if (end > file) {
+        *end = '.';
+        end++;
+        *end = 'c';
+        end++;
+        *end = '\0';
+    }
+
+    fp=fopen(file, "w");
     fprintf(fp, "#include <stdio.h>\n");
     fprintf(fp, "int main () {\n");
     idlvl += 1;

@@ -8,6 +8,7 @@
 #include "code.h"
 #include "type.h"
 
+extern FILE *yyin;
 int yylex();
 void yyparse();
 
@@ -27,11 +28,12 @@ enum MODE {
 
 int main(int argc, char **argv)
 {
-    if (argc == 2)
+    if (argc == 3)
     {
         enum MODE mode;
         int OK;
         char *input = argv[1];
+        char *file = argv[2];
 
         if (strcmp(input, "scan") == 0) { mode = SCAN; OK = 1; }
         else if (strcmp(input, "tokens") == 0) { mode = TOKENS; OK = 0; }
@@ -39,8 +41,10 @@ int main(int argc, char **argv)
         else if (strcmp(input, "pretty") == 0) { mode = PRETTY; OK = 0; }
         else if (strcmp(input, "symbol") == 0) { mode = SYMBOL; OK = 0; }
         else if (strcmp(input, "typecheck") == 0) { mode = TYPECHECK; OK = 1; }
-        else if (strcmp(input, "codegen") == 0) { mode = CODEGEN; OK = 0; }
+        else if (strcmp(input, "codegen") == 0) { mode = CODEGEN; OK = 1; }
         else { fprintf(stderr, "Incorrect arguments\n"); return -1; }
+
+        yyin = fopen(file, "r");
 
         if (mode <= TOKENS)
         {
@@ -49,7 +53,7 @@ int main(int argc, char **argv)
         }
         else
         {
-            yyparse(); // Scan and Parse
+            yyparse(yyin); // Scan and Parse
             if (mode == PRETTY) 
             { 
                 prettyPROG(root); 
@@ -95,7 +99,7 @@ int main(int argc, char **argv)
             {
                 symPROG(root); 
                 typePROG(symboltable, root);
-                codePROG(root);
+                codePROG(root, file);
             }
         }
 
